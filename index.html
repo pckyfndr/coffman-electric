@@ -173,6 +173,32 @@
   footer a{color:#dfe7e2;text-decoration:none}
   footer a:hover{color:var(--green-glow)}
 
+
+  /* Chat bubble */
+  .chat-fab{position:fixed;right:20px;bottom:20px;z-index:70;width:62px;height:62px;border-radius:50%;border:0;background:var(--green);color:#fff;display:grid;place-items:center;cursor:pointer;box-shadow:0 10px 28px -8px rgba(0,0,0,.45);transition:transform .15s,background .15s}
+  .chat-fab:hover{background:var(--green-dark);transform:scale(1.05)}
+  .chat-fab svg{width:30px;height:30px}
+  .chat-fab .x{display:none}
+  .chat-open .chat-fab .x{display:block}
+  .chat-open .chat-fab .bubble{display:none}
+  .chat-panel{position:fixed;right:20px;bottom:96px;z-index:70;width:min(360px,calc(100vw - 32px));background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 24px 60px -16px rgba(0,0,0,.5);opacity:0;transform:translateY(12px) scale(.98);pointer-events:none;visibility:hidden;transition:opacity .2s,transform .2s,visibility .2s}
+  .chat-open .chat-panel{opacity:1;transform:none;pointer-events:auto;visibility:visible}
+  .chat-head{background:var(--green);color:#fff;text-align:center;padding:18px 16px 16px}
+  .chat-head img{width:56px;height:56px;border-radius:50%;background:#fff;margin:8px auto;padding:2px}
+  .chat-head strong{display:block;font-size:1.1rem}
+  .chat-head span{font-size:.9rem;opacity:.95}
+  .chat-body{padding:16px;display:grid;gap:12px;background:#f3faf3}
+  .chat-greet{background:#fff;border:1px solid #dcebdc;border-radius:12px 12px 12px 4px;padding:10px 12px;font-size:.95rem}
+  .chat-body input,.chat-body textarea{font:inherit;padding:11px 12px;border:1px solid #cfd8d2;border-radius:10px;background:#fff;width:100%}
+  .chat-body textarea{min-height:84px;resize:vertical}
+  .chat-body .btn{width:100%}
+  .chat-note{font-size:.8rem;color:#6a756e;margin:0;text-align:center}
+  .chat-note a{color:var(--green-dark);font-weight:600}
+  @media (max-width:760px){
+    .chat-fab{bottom:calc(84px + env(safe-area-inset-bottom));right:14px;width:56px;height:56px}
+    .chat-panel{bottom:calc(150px + env(safe-area-inset-bottom));right:16px}
+  }
+
   /* Mobile sticky call bar */
   .callbar{display:none}
   @media (max-width:760px){
@@ -398,6 +424,28 @@
   </div>
 </footer>
 
+
+<div class="chat" id="chat">
+  <div class="chat-panel" id="chat-panel" role="dialog" aria-label="Contact Us">
+    <div class="chat-head">
+      <strong>Contact Us</strong>
+      <img src="logo.png" alt="">
+      <span>Text Bo directly. He'll reply from his cell.</span>
+    </div>
+    <form class="chat-body" id="chat-form">
+      <div class="chat-greet">Hi! What can we help you with?</div>
+      <input name="name" placeholder="Your name" autocomplete="name" required aria-label="Your name">
+      <textarea name="msg" placeholder="Type your message..." required aria-label="Message"></textarea>
+      <button class="btn btn-primary" type="submit">Send a Message</button>
+      <p class="chat-note">Opens your texting app to send. On a computer? Call or text <a href="tel:+14065440782">406-544-0782</a>.</p>
+    </form>
+  </div>
+  <button class="chat-fab" id="chat-fab" type="button" aria-expanded="false" aria-controls="chat-panel" aria-label="Contact us">
+    <svg class="bubble" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-8 8H4l2-3.2A8 8 0 1 1 21 12z"/></svg>
+    <svg class="x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+  </button>
+</div>
+
 <div class="callbar">
   <a class="btn btn-primary" href="tel:+14065440782">Call</a>
   <a class="btn btn-ghost" href="sms:+14065440782">Text</a>
@@ -405,6 +453,25 @@
 
 <script>
   document.getElementById('yr').textContent = new Date().getFullYear();
+  function smsLink(body){
+    var sep = /iPhone|iPad|iPod/.test(navigator.userAgent) ? '&' : '?';
+    return 'sms:+14065440782' + sep + 'body=' + encodeURIComponent(body);
+  }
+  var chat = document.getElementById('chat'), fab = document.getElementById('chat-fab');
+  fab.addEventListener('click', function () {
+    var open = chat.classList.toggle('chat-open');
+    fab.setAttribute('aria-expanded', open);
+    fab.setAttribute('aria-label', open ? 'Close' : 'Contact us');
+    if (open) setTimeout(function(){ chat.querySelector('input').focus(); }, 200);
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && chat.classList.contains('chat-open')) fab.click();
+  });
+  document.getElementById('chat-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var f = new FormData(this);
+    window.location.href = smsLink('Hi Bo, this is ' + f.get('name') + ' (from your website): ' + f.get('msg'));
+  });
   document.getElementById('estimate-form').addEventListener('submit', function (e) {
     e.preventDefault();
     var f = new FormData(this);
@@ -412,8 +479,7 @@
       'Type: ' + f.get('type') + '\n' +
       (f.get('location') ? 'Location: ' + f.get('location') + '\n' : '') +
       f.get('details');
-    var sep = /iPhone|iPad|iPod/.test(navigator.userAgent) ? '&' : '?';
-    window.location.href = 'sms:+14065440782' + sep + 'body=' + encodeURIComponent(msg);
+    window.location.href = smsLink(msg);
   });
 </script>
 </body>
