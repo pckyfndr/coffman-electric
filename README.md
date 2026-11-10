@@ -10,5 +10,5 @@ To host: upload all the files in this folder to any static host (GitHub Pages, N
 
 ## Confirm with the client before launch
 - Service lists under Residential / Farm & Ranch / Commercial are typical electrician work; adjust to what they actually do.
-- License number, email, business hours, reviews, Facebook page link.
+- License number, email, business hours, reviews.
 - The estimate form opens the visitor's texting app with their request pre-filled (no server needed). Swap for an email form service if they prefer email.
