@@ -68,7 +68,9 @@
   .hero p.lead{color:#c9d3cd;font-size:1.15rem;max-width:34ch;margin:0 0 30px}
   .hero-ctas{display:flex;flex-wrap:wrap;gap:12px}
   .pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:34px}
-  .pill{border:1px solid rgba(255,255,255,.16);border-radius:999px;padding:6px 14px;font-size:.85rem;color:#dfe7e2}
+  .pill{border:1px solid rgba(255,255,255,.16);border-radius:999px;padding:6px 14px;font-size:.85rem;color:#dfe7e2;text-decoration:none;transition:border-color .15s,color .15s}
+  .pill:hover{border-color:var(--green-glow);color:var(--green-glow)}
+  section[id],.card[id]{scroll-margin-top:84px}
   .hero-badge{justify-self:center;position:relative;width:min(360px,80vw);aspect-ratio:1}
   .hero-badge .ring{position:absolute;inset:0;border-radius:50%;border:2px dashed rgba(94,240,106,.35);animation:spin 40s linear infinite}
   .hero-badge .disc{position:absolute;inset:8%;border-radius:50%;background:#fff;display:grid;place-items:center;box-shadow:0 0 0 10px rgba(47,191,58,.18),0 0 80px rgba(47,191,58,.45)}
@@ -244,9 +246,9 @@
           <a class="btn btn-ghost" href="#contact">Request an estimate</a>
         </div>
         <div class="pills">
-          <span class="pill">Residential</span>
-          <span class="pill">Farm &amp; Ranch</span>
-          <span class="pill">Commercial</span>
+          <a class="pill" href="#residential">Residential</a>
+          <a class="pill" href="#farm-ranch">Farm &amp; Ranch</a>
+          <a class="pill" href="#commercial">Commercial</a>
         </div>
       </div>
       <div class="hero-badge" aria-hidden="true">
@@ -264,7 +266,7 @@
         <p>Whether it's the house, the barn, or the shop downtown, we handle the wiring so you don't have to call three different crews.</p>
       </div>
       <div class="services">
-        <article class="card">
+        <article class="card" id="residential">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="m12.5 11-2.5 4h4l-2.5 4"/></svg></div>
           <h3>Residential</h3>
           <p>Safe, code-compliant wiring for homes, new builds, and remodels.</p>
@@ -276,7 +278,7 @@
             <li>Generator hookups</li>
           </ul>
         </article>
-        <article class="card featured">
+        <article class="card featured" id="farm-ranch">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21V10l7-5 7 5v11"/><path d="M8 21v-6h4v6"/><path d="M17 21h4v-7l-4-3"/><path d="M10 5V3"/></svg></div>
           <h3>Farm &amp; Ranch</h3>
           <p>Rural power that holds up to Montana weather, livestock, and long distances.</p>
@@ -289,7 +291,7 @@
             <li>Equipment &amp; heated waterer circuits</li>
           </ul>
         </article>
-        <article class="card">
+        <article class="card" id="commercial">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M8 7h2M14 7h2M8 11h2M14 11h2M8 15h2M14 15h2"/></svg></div>
           <h3>Commercial</h3>
           <p>Dependable electrical service that keeps your business running.</p>
